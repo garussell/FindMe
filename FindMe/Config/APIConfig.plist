@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ADZUNA_APP_ID</key>
+	<string></string>
+	<key>ADZUNA_APP_KEY</key>
+	<string></string>
+	<key>BLS_API_KEY</key>
+	<string></string>
+	<key>JSEARCH_API_KEY</key>
+	<string></string>
+	<key>USAJOBS_API_KEY</key>
+	<string></string>
+	<key>USAJOBS_USER_AGENT</key>
+	<string></string>
+</dict>
+</plist>

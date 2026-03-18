@@ -10,9 +10,11 @@ import SwiftData
 
 @main
 struct FindMeApp: App {
+    @State private var container = AppContainer.makeLive()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            SavedJob.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -26,6 +28,7 @@ struct FindMeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(container)
         }
         .modelContainer(sharedModelContainer)
     }
