@@ -6,6 +6,7 @@ enum JobSource: String, CaseIterable, Codable, Identifiable, Sendable {
     case jsearch
     case usajobs
     case arbeitnow
+    case serpapi
 
     var id: String { rawValue }
 
@@ -19,6 +20,8 @@ enum JobSource: String, CaseIterable, Codable, Identifiable, Sendable {
             "USAJobs"
         case .arbeitnow:
             "ArbeitNow"
+        case .serpapi:
+            "Google Jobs"
         }
     }
 
@@ -32,6 +35,8 @@ enum JobSource: String, CaseIterable, Codable, Identifiable, Sendable {
             Color.indigo
         case .arbeitnow:
             Color.green
+        case .serpapi:
+            Color.red
         }
     }
 }

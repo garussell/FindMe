@@ -5,8 +5,8 @@ struct InsightCardView: View {
     let insight: MarketInsight
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: Theme.Spacing.lg) {
+            VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
                 Text(insight.title)
                     .font(.headline)
                 Text(insight.headlineValue)
@@ -45,10 +45,9 @@ struct InsightCardView: View {
                 .font(.caption)
                 .foregroundStyle(.tertiary)
         }
-        .padding(20)
-        .background(
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(.thinMaterial)
-        )
+        .padding(Theme.Spacing.xl)
+        .cardStyle()
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(insight.title): \(insight.headlineValue)")
     }
 }

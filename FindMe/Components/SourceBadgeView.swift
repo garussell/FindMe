@@ -10,6 +10,7 @@ struct SourceBadgeView: View {
             .padding(.vertical, 6)
             .background(source.tint.opacity(0.15), in: Capsule())
             .foregroundStyle(source.tint)
+            .accessibilityLabel("Source: \(source.displayName)")
     }
 }
 

@@ -7,20 +7,37 @@ struct InsightsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Labor Market Snapshot")
-                        .font(.title2.bold())
+                VStack(alignment: .leading, spacing: Theme.Spacing.lg) {
+                    VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
+                        Text("Labor Market Snapshot")
+                            .font(.title2.bold())
 
-                    Text("A lean BLS section helps users calibrate what the broader market looks like without turning the MVP into a full analytics product.")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        Text("Broader market context to help calibrate your search and salary expectations.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
 
                     if viewModel.isLoading {
-                        ProgressView()
-                            .frame(maxWidth: .infinity, minHeight: 220)
+                        VStack(spacing: Theme.Spacing.lg) {
+                            ForEach(0..<2, id: \.self) { _ in
+                                SkeletonInsightCard()
+                            }
+                        }
+                    } else if viewModel.insights.isEmpty, viewModel.hasLoaded {
+                        EmptyStateCard(
+                            title: "No Insights Available",
+                            message: "Market data could not be loaded. Check your connection and try again.",
+                            systemImage: "chart.line.downtrend.xyaxis",
+                            retryAction: {
+                                viewModel.hasLoaded = false
+                                Task { await viewModel.loadIfNeeded() }
+                            }
+                        )
                     } else {
-                        ForEach(viewModel.insights) { insight in
-                            InsightCardView(insight: insight)
+                        ForEach(Array(viewModel.insights.enumerated()), id: \.element.id) { index, insight in
+                            AnimatedCardWrapper(index: index) {
+                                InsightCardView(insight: insight)
+                            }
                         }
                     }
                 }
@@ -32,6 +49,7 @@ struct InsightsView: View {
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
+                .ignoresSafeArea()
             )
             .navigationTitle("Insights")
         }
@@ -39,5 +57,34 @@ struct InsightsView: View {
             viewModel.configureIfNeeded(service: container.insightsService)
             await viewModel.loadIfNeeded()
         }
+    }
+}
+
+// MARK: - Skeleton Insight Card
+
+private struct SkeletonInsightCard: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: Theme.Spacing.lg) {
+            VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
+                skeletonRect(width: 160, height: 16)
+                skeletonRect(width: 100, height: 28)
+                skeletonRect(width: 200, height: 13)
+            }
+
+            skeletonRect(height: 160)
+
+            skeletonRect(height: 12)
+            skeletonRect(width: 120, height: 10)
+        }
+        .padding(Theme.Spacing.xl)
+        .cardStyle()
+        .shimmer()
+    }
+
+    private func skeletonRect(width: CGFloat? = nil, height: CGFloat = 14) -> some View {
+        RoundedRectangle(cornerRadius: Theme.Radius.sm, style: .continuous)
+            .fill(Color.primary.opacity(0.08))
+            .frame(width: width, height: height)
+            .frame(maxWidth: width == nil ? .infinity : nil, alignment: .leading)
     }
 }

@@ -8,17 +8,23 @@ final class AppContainer {
     let searchService: AggregatedJobSearchService
     let insightsService: BLSInsightsService
     let recentSearchStore: RecentSearchStore
+    let locationManager: LocationManager
+    let toastManager: ToastManager
 
     init(
         configuration: AppConfiguration,
         searchService: AggregatedJobSearchService,
         insightsService: BLSInsightsService,
-        recentSearchStore: RecentSearchStore
+        recentSearchStore: RecentSearchStore,
+        locationManager: LocationManager,
+        toastManager: ToastManager
     ) {
         self.configuration = configuration
         self.searchService = searchService
         self.insightsService = insightsService
         self.recentSearchStore = recentSearchStore
+        self.locationManager = locationManager
+        self.toastManager = toastManager
     }
 
     static func makeLive() -> AppContainer {
@@ -29,14 +35,17 @@ final class AppContainer {
             AdzunaService(client: client, configuration: configuration),
             JSearchService(client: client, configuration: configuration),
             USAJobsService(client: client, configuration: configuration),
-            ArbeitNowService(client: client)
+            ArbeitNowService(client: client),
+            SerpApiService(client: client, configuration: configuration)
         ]
 
         return AppContainer(
             configuration: configuration,
             searchService: AggregatedJobSearchService(providers: providers),
             insightsService: BLSInsightsService(client: client, configuration: configuration),
-            recentSearchStore: RecentSearchStore()
+            recentSearchStore: RecentSearchStore(),
+            locationManager: LocationManager(),
+            toastManager: ToastManager()
         )
     }
 }
