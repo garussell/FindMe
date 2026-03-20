@@ -7,6 +7,7 @@ struct AppConfiguration: Sendable {
     let usaJobsAPIKey: String?
     let usaJobsUserAgent: String?
     let blsAPIKey: String?
+    let serpApiKey: String?
 
     init(bundle: Bundle = .main, environment: [String: String] = ProcessInfo.processInfo.environment) {
         let localPlistValues = (bundle.url(forResource: "APIConfig.local", withExtension: "plist"))
@@ -36,6 +37,7 @@ struct AppConfiguration: Sendable {
         usaJobsAPIKey = resolvedValue(for: "USAJOBS_API_KEY")
         usaJobsUserAgent = resolvedValue(for: "USAJOBS_USER_AGENT")
         blsAPIKey = resolvedValue(for: "BLS_API_KEY")
+        serpApiKey = resolvedValue(for: "SERPAPI_KEY")
     }
 
     var hasAdzunaCredentials: Bool {
@@ -48,5 +50,9 @@ struct AppConfiguration: Sendable {
 
     var hasUSAJobsCredentials: Bool {
         usaJobsAPIKey != nil && usaJobsUserAgent != nil
+    }
+
+    var hasSerpApiCredentials: Bool {
+        serpApiKey != nil
     }
 }

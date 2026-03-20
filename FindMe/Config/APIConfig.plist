@@ -14,5 +14,7 @@
 	<string></string>
 	<key>USAJOBS_USER_AGENT</key>
 	<string></string>
+	<key>SERPAPI_KEY</key>
+	<string></string>
 </dict>
 </plist>

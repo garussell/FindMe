@@ -6,6 +6,7 @@ enum JobSourceFilter: String, CaseIterable, Codable, Identifiable, Sendable {
     case jsearch
     case usajobs
     case arbeitnow
+    case serpapi
 
     var id: String { rawValue }
 
@@ -21,6 +22,8 @@ enum JobSourceFilter: String, CaseIterable, Codable, Identifiable, Sendable {
             "USAJobs"
         case .arbeitnow:
             "ArbeitNow"
+        case .serpapi:
+            "Google Jobs"
         }
     }
 
@@ -36,6 +39,8 @@ enum JobSourceFilter: String, CaseIterable, Codable, Identifiable, Sendable {
             [.usajobs]
         case .arbeitnow:
             [.arbeitnow]
+        case .serpapi:
+            [.serpapi]
         }
     }
 }
